@@ -140,18 +140,18 @@ void loop()
             strip.clearStrip();
             strip.colorWipeAnimation(strip.Color(255, 0, 0), 10); //show green color wipe to indicate it is ready to go
             break;
+        case SCANNER:
+            strip.ActivePattern = COLOR_WIPE;
+            currentPattern = strip.ActivePattern;
+            strip.clearStrip();
+            strip.colorWipeAnimation(strip.Color(255, 75, 0), 10); //show green color wipe to indicate it is ready to go
+            break;
         case COLOR_WIPE:
             strip.ActivePattern = DRUMBEAT;
             strip.TotalSteps = 255;
             currentPattern = strip.ActivePattern;
             strip.clearStrip();
             strip.colorWipeAnimation(strip.Color(0, 30, 0), 10); //show green color wipe to indicate it is ready to go
-            break;
-        case SCANNER:
-            strip.ActivePattern = COLOR_WIPE;
-            currentPattern = strip.ActivePattern;
-            strip.clearStrip();
-            strip.colorWipeAnimation(strip.Color(255, 75, 0), 10); //show green color wipe to indicate it is ready to go
             break;
         default:
             strip.ActivePattern = DRUMBEAT;
