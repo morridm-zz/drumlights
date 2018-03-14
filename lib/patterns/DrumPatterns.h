@@ -66,7 +66,7 @@ public:
 
     if (bForcingDrumBeat)
     {
-      DrumBeatUpdate();      
+      DrumBeatUpdate();
     }
 
     elapsedTimeInMilliSeconds = (millis() - lastUpdate);
@@ -527,12 +527,16 @@ public:
       numLoops = 0;
     }
 
+    red = constrain(red, 0, 255);
+    green = constrain(green, 0, 255);
+    blue = constrain(blue, 0, 255);
+
     setPixel(pixel, red, green, blue);
   }
 
   void DrumBeatUpdate()
   {
-    
+
     for (int i = numPixels(); i > 0; i--)
     {
       setPixel(i, getPixelColor(i - 1));
@@ -540,8 +544,8 @@ public:
 
     if (isChaseSignal())
     {
-
-      setPixelStripColorBasedOnPiezoValue(0, (analogRead(myDrumComponent.PIEZO_ANALOG_INPUT_PIN) / 1024.0));
+      float sensorValue = (float)map((analogRead(myDrumComponent.PIEZO_ANALOG_INPUT_PIN) / 1023.0 * 5.0), 0, 1023, 1, 255);
+      setPixelStripColorBasedOnPiezoValue(0, sensorValue);
     }
     else
     {
