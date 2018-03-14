@@ -13,7 +13,11 @@
   
 ## Animated LED Drum Lights
 
-My daughter and I are adding interactive leds to her drum set for fun and a learning experience.  This is our project we setup for us to take it from concept to reality.  
+My daughter and I added interactive leds to her drum set for fun and a learning experience.  This is our project we setup for us to take it from concept to reality.  
+
+Note:  I originally used the Arduino IDE for this project but switched to [PlatformIO for VSCode](https://platformio.org/get-started/ide?install=vscode) when I updated/refactored the project for use with an Adafruit Trinket Pro 5v instead of the regular Trinket 5v.  
+
+I was not aware of PlatformIO when I orginally started this project and stumbled opon it.  I'm so glad I did!  PlatformIO is night and day better than the Arduino IDE.  If you have not yet, make the change to [PlatformIO with VSCode](https://platformio.org/get-started/ide?install=vscode). 
 
 - [ ] Pro(s): This is a great arduino learning project and will be awesome when implemented.
 - [ ] Con(s): Expensive, when making one for every drum/cymbal in the set.  You could probably use fewer trinkets if powering from an external source instead of USB.  I thought about this later but just went ahead with one trinket per drum/cymbal.
