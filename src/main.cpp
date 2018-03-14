@@ -31,6 +31,39 @@ void animationComplete();
 
 DrumPatterns strip(theDrum, theDrum.numPixelsOnDrum, theDrum.NEOPIXEL_STRIP_SIGNAL_PIN, NEO_GRB + NEO_KHZ800, &animationComplete);
 
+// Strip  Completion Callback
+void animationComplete()
+{
+
+    uint8_t red = random(0, 255);
+    uint8_t green = random(0, 255);
+    uint8_t blue = random(0, 255);
+
+    if (strip.ActivePattern == RAINBOW_CYCLE)
+    {
+        strip.RainbowCycle(random(0, 10));
+    }
+
+    //  strip.Fade( 50, 255, 255, 30  );
+    if (strip.ActivePattern == SCANNER)
+    {
+
+        if ((red + green + blue) <= 10)
+        {
+            red = 0;
+            green = 0;
+            blue = 255;
+        }
+
+        strip.Scanner(strip.Color(red, green, blue), 25);
+    }
+
+    if (strip.ActivePattern == COLOR_WIPE)
+    {
+        strip.ColorWipe(strip.Color(red, green, blue), 10);
+    }
+}
+
 bool wasButtonPressed()
 {
 
@@ -131,37 +164,4 @@ void loop()
     }
 
     strip.showStrip();
-}
-
-// Strip  Completion Callback
-void animationComplete()
-{
-
-    uint8_t red = random(0, 255);
-    uint8_t green = random(0, 255);
-    uint8_t blue = random(0, 255);
-
-    if (strip.ActivePattern == RAINBOW_CYCLE)
-    {
-        strip.RainbowCycle(random(0, 10));
-    }
-
-    //  strip.Fade( 50, 255, 255, 30  );
-    if (strip.ActivePattern == SCANNER)
-    {
-
-        if ((red + green + blue) <= 10)
-        {
-            red = 0;
-            green = 0;
-            blue = 255;
-        }
-
-        strip.Scanner(strip.Color(red, green, blue), 25);
-    }
-
-    if (strip.ActivePattern == COLOR_WIPE)
-    {
-        strip.ColorWipe(strip.Color(red, green, blue), 10);
-    }
 }
