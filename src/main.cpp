@@ -1,3 +1,18 @@
+/* David Morris 2018
+  Thanks to:
+      https://www.adafruit.com
+      http://cassettepunk.com
+      http://fastled.io
+      https://beammyselfintothefuture.wordpress.com/
+      http://moving-rainbow.readthedocs.io/en/latest/guide/color-wheel/
+      https://www.instructables.com/id/Light-Up-Drum-Kit/
+  for all the great tutorials.
+
+  Note: If you are looking for the code I used for my Trinket 5v original see "https://github.com/morridm/drumlights/tree/master/archive/Trinket".
+  This code assumes you are using an Adafruit Trinket Pro 5v not the regular Trinket 5v.
+*/
+
+
 #include <Arduino.h>
 #include <DrumPatterns.h>
 
