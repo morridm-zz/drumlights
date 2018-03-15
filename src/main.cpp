@@ -21,11 +21,11 @@ static const int PIEZO_DIGITAL_INPUT_PIN = 14;  // The digital pin # for the pie
 static const int POT_PIN = A1;
 static const int BUTTON_PIN = 12;
 
-//static const struct DrumComponent MIDDLE_TOM      = { 3, 65, 0, 0, NEOPIXEL_STRIP_SIGNAL_PIN, PIEZO_ANALOG_INPUT_PIN, PIEZO_DIGITAL_INPUT_PIN, POT_PIN };
+//static const struct DrumComponent MIDDLE_TOM      = { 3, 65, 10, 0, NEOPIXEL_STRIP_SIGNAL_PIN, PIEZO_ANALOG_INPUT_PIN, PIEZO_DIGITAL_INPUT_PIN, POT_PIN };
 //static const struct DrumComponent HI_TOM          = { 3, 50, 10, 0, NEOPIXEL_STRIP_SIGNAL_PIN, PIEZO_ANALOG_INPUT_PIN, PIEZO_DIGITAL_INPUT_PIN, POT_PIN };
 //static const struct DrumComponent FLOOR_TOM       = { 3, 81, 10, 0, NEOPIXEL_STRIP_SIGNAL_PIN, PIEZO_ANALOG_INPUT_PIN, PIEZO_DIGITAL_INPUT_PIN, POT_PIN };
 
-static const struct DrumComponent theDrum = {3, 81, 1, 0, NEOPIXEL_STRIP_SIGNAL_PIN, PIEZO_ANALOG_INPUT_PIN, PIEZO_DIGITAL_INPUT_PIN, POT_PIN};
+static const struct DrumComponent theDrum = {3, 81, 7, 0, NEOPIXEL_STRIP_SIGNAL_PIN, PIEZO_ANALOG_INPUT_PIN, PIEZO_DIGITAL_INPUT_PIN, POT_PIN};
 
 void animationComplete();
 
