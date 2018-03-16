@@ -1,4 +1,4 @@
-typedef struct DrumComponent
+struct DrumComponent
 {
   byte id;
   byte numPixelsOnDrum;
@@ -7,5 +7,5 @@ typedef struct DrumComponent
   int NEOPIXEL_STRIP_SIGNAL_PIN;
   int PIEZO_ANALOG_INPUT_PIN;
   int PIEZO_DIGITAL_INPUT_PIN;
-  int POT_PIN;  
+  int POT_PIN;
 };

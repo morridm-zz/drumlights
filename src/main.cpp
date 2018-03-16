@@ -29,7 +29,7 @@ static const struct DrumComponent theDrum = {3, 81, 7, 0, NEOPIXEL_STRIP_SIGNAL_
 
 void animationComplete();
 
-DrumPatterns strip(theDrum, theDrum.numPixelsOnDrum, theDrum.NEOPIXEL_STRIP_SIGNAL_PIN, NEO_GRB + NEO_KHZ800, &animationComplete);
+DrumPatterns strip(theDrum, NEO_GRB + NEO_KHZ800, &animationComplete);
 
 // Strip  Completion Callback
 void animationComplete()
