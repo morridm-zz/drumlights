@@ -15,21 +15,23 @@
 #include <Arduino.h>
 #include <PixelDrumPatterns.h> //See https://github.com/morridm/drumlights/blob/master/lib/patterns/PixelDrumPatterns.h
 
-static const int NEOPIXEL_STRIP_SIGNAL_PIN = 4; // The digital pin # for the neopixel output
-static const int PIEZO_ANALOG_INPUT_PIN = 0;    // The analog alias pin # to the piezo input on PIEZO_DIGITAL_INPUT_PIN
-static const int PIEZO_DIGITAL_INPUT_PIN = 14;  // The digital pin # for the piezo input
-static const int POT_PIN = A1;
-static const int BUTTON_PIN = 12;
+static const int LED_STRIP_PIN_NUMBER = 4;     // The digital pin # for the neopixel output
+static const int PIEZO_ANALOG_INPUT_PIN = 0;   // The analog alias pin # to the piezo input on PIEZO_DIGITAL_INPUT_PIN
+static const int PIEZO_DIGITAL_INPUT_PIN = 14; // The digital pin # for the piezo input
+static const int POTENTIOMETER_PIN = A1;
+static const int PUSH_BUTTON_PIN = 12;
 
-//static const struct DrumComponent MIDDLE_TOM      = { 0, 65, 10, 0 };
-//static const struct DrumComponent HI_TOM          = { 1, 50, 10, 0 };
-//static const struct DrumComponent FLOOR_TOM       = { 2, 81, 10, 0 };
+static const struct DrumComponent SNARE = {0, 50, 7, 0, LED_STRIP_PIN_NUMBER, PIEZO_ANALOG_INPUT_PIN, PIEZO_DIGITAL_INPUT_PIN, POTENTIOMETER_PIN, PUSH_BUTTON_PIN, NEO_GRB + NEO_KHZ800};
+static const struct DrumComponent HI_TOM = {1, 50, 7, 0, LED_STRIP_PIN_NUMBER, PIEZO_ANALOG_INPUT_PIN, PIEZO_DIGITAL_INPUT_PIN, POTENTIOMETER_PIN, PUSH_BUTTON_PIN, NEO_GRB + NEO_KHZ800};
+static const struct DrumComponent MIDDLE_TOM = {2, 65, 7, 0, LED_STRIP_PIN_NUMBER, PIEZO_ANALOG_INPUT_PIN, PIEZO_DIGITAL_INPUT_PIN, POTENTIOMETER_PIN, PUSH_BUTTON_PIN, NEO_GRB + NEO_KHZ800};
+static const struct DrumComponent FLOOR_TOM = {3, 81, 7, 0, LED_STRIP_PIN_NUMBER, PIEZO_ANALOG_INPUT_PIN, PIEZO_DIGITAL_INPUT_PIN, POTENTIOMETER_PIN, PUSH_BUTTON_PIN, NEO_GRB + NEO_KHZ800};
+static const struct DrumComponent KICK = {4, 85, 7, 0, LED_STRIP_PIN_NUMBER, PIEZO_ANALOG_INPUT_PIN, PIEZO_DIGITAL_INPUT_PIN, POTENTIOMETER_PIN, PUSH_BUTTON_PIN, NEO_GRB + NEO_KHZ800};
 
-static const struct DrumComponent KICK = {3, 81, 7, 0, NEOPIXEL_STRIP_SIGNAL_PIN, PIEZO_ANALOG_INPUT_PIN, PIEZO_DIGITAL_INPUT_PIN, POT_PIN, BUTTON_PIN, NEO_GRB + NEO_KHZ800};
+static const struct DrumComponent THIS_DRUM_COMPONENT = KICK;
 
 void animationComplete();
 
-DrumPatterns strip(KICK, &animationComplete);
+DrumPatterns strip(THIS_DRUM_COMPONENT, &animationComplete);
 
 // Strip  Completion Callback
 void animationComplete()
@@ -72,7 +74,7 @@ bool wasButtonPressed()
     bool bReturn = false;
 
     // Get current button state.
-    bool newState = digitalRead(BUTTON_PIN);
+    bool newState = digitalRead(PUSH_BUTTON_PIN);
 
     // Check if state changed from high to low (button press).
     if (newState == LOW && oldState == HIGH)
@@ -82,7 +84,7 @@ bool wasButtonPressed()
         delay(20);
 
         // Check if button is still low after debounce.
-        newState = digitalRead(BUTTON_PIN);
+        newState = digitalRead(PUSH_BUTTON_PIN);
 
         if (newState == LOW)
         {
@@ -108,7 +110,7 @@ void setup()
     strip.ActivePattern = DRUMBEAT;
 
     pinMode(PIEZO_DIGITAL_INPUT_PIN, INPUT);
-    pinMode(BUTTON_PIN, INPUT_PULLUP);
+    pinMode(PUSH_BUTTON_PIN, INPUT_PULLUP);
 
     strip.clearStrip();
     strip.colorWipeAnimation(strip.Color(0, 30, 0), 10); //show green color wipe to indicate it is ready to go
