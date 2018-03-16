@@ -2,7 +2,6 @@
 #include <DrumBean.h>
 #include <AnimationPatterns.h>
 #include <Direction.h>
-#include <DrumType.h>
 
 // NeoPattern Class - derived from the Adafruit_NeoPixel class
 class DrumPatterns : public Adafruit_NeoPixel

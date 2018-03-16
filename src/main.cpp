@@ -21,15 +21,15 @@ static const int PIEZO_DIGITAL_INPUT_PIN = 14;  // The digital pin # for the pie
 static const int POT_PIN = A1;
 static const int BUTTON_PIN = 12;
 
-//static const struct DrumComponent MIDDLE_TOM      = { 3, 65, 10, 0, NEOPIXEL_STRIP_SIGNAL_PIN, PIEZO_ANALOG_INPUT_PIN, PIEZO_DIGITAL_INPUT_PIN, POT_PIN, NEO_GRB + NEO_KHZ800 };
-//static const struct DrumComponent HI_TOM          = { 3, 50, 10, 0, NEOPIXEL_STRIP_SIGNAL_PIN, PIEZO_ANALOG_INPUT_PIN, PIEZO_DIGITAL_INPUT_PIN, POT_PIN, NEO_GRB + NEO_KHZ800 };
-//static const struct DrumComponent FLOOR_TOM       = { 3, 81, 10, 0, NEOPIXEL_STRIP_SIGNAL_PIN, PIEZO_ANALOG_INPUT_PIN, PIEZO_DIGITAL_INPUT_PIN, POT_PIN, NEO_GRB + NEO_KHZ800 };
+//static const struct DrumComponent MIDDLE_TOM      = { 0, 65, 10, 0 };
+//static const struct DrumComponent HI_TOM          = { 1, 50, 10, 0 };
+//static const struct DrumComponent FLOOR_TOM       = { 2, 81, 10, 0 };
 
-static const struct DrumComponent theDrum = {3, 81, 7, 0, NEOPIXEL_STRIP_SIGNAL_PIN, PIEZO_ANALOG_INPUT_PIN, PIEZO_DIGITAL_INPUT_PIN, POT_PIN, NEO_GRB + NEO_KHZ800};
+static const struct DrumComponent KICK = {3, 81, 7, 0, NEOPIXEL_STRIP_SIGNAL_PIN, PIEZO_ANALOG_INPUT_PIN, PIEZO_DIGITAL_INPUT_PIN, POT_PIN, BUTTON_PIN, NEO_GRB + NEO_KHZ800};
 
 void animationComplete();
 
-DrumPatterns strip(theDrum, &animationComplete);
+DrumPatterns strip(KICK, &animationComplete);
 
 // Strip  Completion Callback
 void animationComplete()
