@@ -9,7 +9,6 @@
   <meta name="author" content="David Morris">
   <meta name="description" content="Animated LED Drum Lights">  
   <meta name='keywords' content='neopixel , drum , lights , arduino , trinket , adafruit , LED , make , blink , Piezo , knock sensor, led, sound, react, how to make leds flash to music with an arduino , cassettepunk , sound , reactive '>  
-  <meta name="google-site-verification" content="8z6ABWhrKxR3toUiw3lN3x8rqX0ixnN-jqz16jV6QoQ" />
 </head>    
   
 ## Animated LED Drum Lights
