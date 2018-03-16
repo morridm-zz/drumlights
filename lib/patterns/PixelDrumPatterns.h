@@ -28,7 +28,7 @@ public:
   void (*OnComplete)(); // Callback on completion of pattern
 
   // Constructor - calls base-class constructor to initialize strip
-  DrumPatterns(DrumComponent dc, void (*callback)()) : Adafruit_NeoPixel(dc.numPixelsOnDrum, dc.NEOPIXEL_STRIP_SIGNAL_PIN, dc.strip_type)
+  DrumPatterns(DrumComponent dc, void (*callback)()) : Adafruit_NeoPixel(dc.numPixelsOnDrum, dc.ledStripPinNumber, dc.strip_type)
   {
     OnComplete = callback;
     myDrumComponent = dc;
@@ -305,7 +305,7 @@ public:
 
   uint16_t getCurrentThresholdFromPiezo()
   {
-    return analogRead(myDrumComponent.PIEZO_ANALOG_INPUT_PIN);
+    return analogRead(myDrumComponent.piezoAnalogPinNumber);
   }
 
   void setPixel(int Pixel, uint32_t color)
@@ -389,7 +389,7 @@ public:
 
     if (isChaseSignal())
     {
-      float sensorValue = (float)map((analogRead(myDrumComponent.PIEZO_ANALOG_INPUT_PIN) / 1023.0 * 5.0), 0, 1023, 1, 255);
+      float sensorValue = (float)map((analogRead(myDrumComponent.piezoAnalogPinNumber) / 1023.0 * 5.0), 0, 1023, 1, 255);
       color = Wheel(pixel, sensorValue);
     }
 
@@ -435,7 +435,7 @@ public:
 
     setCurrentPiezoThreshold(getCurrentThresholdFromPiezo());
 
-    uint16_t potValue = constrain(map(int(analogRead(myDrumComponent.POT_PIN)), 0, 1023, int(myDrumComponent.minimumRequiredPiezoThreshold), 85), 0, 85);
+    uint16_t potValue = constrain(map(int(analogRead(myDrumComponent.potentiometerPinNumber)), 0, 1023, int(myDrumComponent.minimumRequiredPiezoThreshold), 85), 0, 85);
 
     if (myDrumComponent.currentPiezoThreshold > potValue)
     {

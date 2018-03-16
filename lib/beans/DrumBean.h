@@ -4,11 +4,11 @@ struct DrumComponent
   byte numPixelsOnDrum;
   uint16_t minimumRequiredPiezoThreshold;
   uint16_t currentPiezoThreshold;
-  int NEOPIXEL_STRIP_SIGNAL_PIN;
-  int PIEZO_ANALOG_INPUT_PIN;
-  int PIEZO_DIGITAL_INPUT_PIN;
-  int POT_PIN;
-  int BUTTON_PIN;
+  int ledStripPinNumber;
+  int piezoAnalogPinNumber;
+  int piezoDigitalPinNumber;
+  int potentiometerPinNumber;
+  int buttonPinNumber;
   uint8_t strip_type;
 };
 
