@@ -13,7 +13,7 @@
 */
 
 #include <Arduino.h>
-#include <DrumPatterns.h>
+#include <DrumPatterns.h> //See https://github.com/morridm/drumlights/blob/master/lib/patterns/DrumPatterns.h
 
 static const int NEOPIXEL_STRIP_SIGNAL_PIN = 4; // The digital pin # for the neopixel output
 static const int PIEZO_ANALOG_INPUT_PIN = 0;    // The analog alias pin # to the piezo input on PIEZO_DIGITAL_INPUT_PIN
