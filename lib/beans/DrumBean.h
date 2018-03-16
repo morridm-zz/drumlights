@@ -8,4 +8,5 @@ struct DrumComponent
   int PIEZO_ANALOG_INPUT_PIN;
   int PIEZO_DIGITAL_INPUT_PIN;
   int POT_PIN;
+  uint8_t strip_type;
 };

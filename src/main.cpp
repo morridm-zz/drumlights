@@ -13,7 +13,7 @@
 */
 
 #include <Arduino.h>
-#include <DrumPatterns.h> //See https://github.com/morridm/drumlights/blob/master/lib/patterns/DrumPatterns.h
+#include <PixelDrumPatterns.h> //See https://github.com/morridm/drumlights/blob/master/lib/patterns/PixelDrumPatterns.h
 
 static const int NEOPIXEL_STRIP_SIGNAL_PIN = 4; // The digital pin # for the neopixel output
 static const int PIEZO_ANALOG_INPUT_PIN = 0;    // The analog alias pin # to the piezo input on PIEZO_DIGITAL_INPUT_PIN
@@ -21,15 +21,15 @@ static const int PIEZO_DIGITAL_INPUT_PIN = 14;  // The digital pin # for the pie
 static const int POT_PIN = A1;
 static const int BUTTON_PIN = 12;
 
-//static const struct DrumComponent MIDDLE_TOM      = { 3, 65, 10, 0, NEOPIXEL_STRIP_SIGNAL_PIN, PIEZO_ANALOG_INPUT_PIN, PIEZO_DIGITAL_INPUT_PIN, POT_PIN };
-//static const struct DrumComponent HI_TOM          = { 3, 50, 10, 0, NEOPIXEL_STRIP_SIGNAL_PIN, PIEZO_ANALOG_INPUT_PIN, PIEZO_DIGITAL_INPUT_PIN, POT_PIN };
-//static const struct DrumComponent FLOOR_TOM       = { 3, 81, 10, 0, NEOPIXEL_STRIP_SIGNAL_PIN, PIEZO_ANALOG_INPUT_PIN, PIEZO_DIGITAL_INPUT_PIN, POT_PIN };
+//static const struct DrumComponent MIDDLE_TOM      = { 3, 65, 10, 0, NEOPIXEL_STRIP_SIGNAL_PIN, PIEZO_ANALOG_INPUT_PIN, PIEZO_DIGITAL_INPUT_PIN, POT_PIN, NEO_GRB + NEO_KHZ800 };
+//static const struct DrumComponent HI_TOM          = { 3, 50, 10, 0, NEOPIXEL_STRIP_SIGNAL_PIN, PIEZO_ANALOG_INPUT_PIN, PIEZO_DIGITAL_INPUT_PIN, POT_PIN, NEO_GRB + NEO_KHZ800 };
+//static const struct DrumComponent FLOOR_TOM       = { 3, 81, 10, 0, NEOPIXEL_STRIP_SIGNAL_PIN, PIEZO_ANALOG_INPUT_PIN, PIEZO_DIGITAL_INPUT_PIN, POT_PIN, NEO_GRB + NEO_KHZ800 };
 
-static const struct DrumComponent theDrum = {3, 81, 7, 0, NEOPIXEL_STRIP_SIGNAL_PIN, PIEZO_ANALOG_INPUT_PIN, PIEZO_DIGITAL_INPUT_PIN, POT_PIN};
+static const struct DrumComponent theDrum = {3, 81, 7, 0, NEOPIXEL_STRIP_SIGNAL_PIN, PIEZO_ANALOG_INPUT_PIN, PIEZO_DIGITAL_INPUT_PIN, POT_PIN, NEO_GRB + NEO_KHZ800};
 
 void animationComplete();
 
-DrumPatterns strip(theDrum, NEO_GRB + NEO_KHZ800, &animationComplete);
+DrumPatterns strip(theDrum, &animationComplete);
 
 // Strip  Completion Callback
 void animationComplete()
@@ -107,7 +107,7 @@ void setup()
 
     strip.ActivePattern = DRUMBEAT;
 
-    pinMode(theDrum.PIEZO_DIGITAL_INPUT_PIN, INPUT);
+    pinMode(PIEZO_DIGITAL_INPUT_PIN, INPUT);
     pinMode(BUTTON_PIN, INPUT_PULLUP);
 
     strip.clearStrip();
@@ -119,7 +119,7 @@ void loop()
 {
     strip.Update();
 
-    pattern currentPattern = strip.ActivePattern;
+    ANIMATION currentPattern = strip.ActivePattern;
 
     if (wasButtonPressed())
     {

@@ -1,7 +1,8 @@
 #include <Adafruit_NeoPixel.h>
 #include <DrumBean.h>
-#include <Pattern.h>
+#include <AnimationPatterns.h>
 #include <Direction.h>
+#include <DrumType.h>
 
 // NeoPattern Class - derived from the Adafruit_NeoPixel class
 class DrumPatterns : public Adafruit_NeoPixel
@@ -10,8 +11,8 @@ public:
   struct DrumComponent myDrumComponent;
 
   // Member Variables:
-  pattern previousPattern;
-  pattern ActivePattern; // which pattern is running
+  ANIMATION previousPattern;
+  ANIMATION ActivePattern; // which pattern is running
   direction Direction;   // direction to run the pattern
 
   boolean bIsChaseSignal = true;
@@ -28,7 +29,7 @@ public:
   void (*OnComplete)(); // Callback on completion of pattern
 
   // Constructor - calls base-class constructor to initialize strip
-  DrumPatterns(DrumComponent dc, uint8_t type, void (*callback)()) : Adafruit_NeoPixel(dc.numPixelsOnDrum, dc.NEOPIXEL_STRIP_SIGNAL_PIN, type)
+  DrumPatterns(DrumComponent dc, void (*callback)()) : Adafruit_NeoPixel(dc.numPixelsOnDrum, dc.NEOPIXEL_STRIP_SIGNAL_PIN, dc.strip_type)
   {
     OnComplete = callback;
     myDrumComponent = dc;
@@ -53,7 +54,7 @@ public:
   void Update()
   {
 
-    pattern p = ActivePattern;
+    ANIMATION p = ActivePattern;
 
     setChaseSignal(isChaseSignal());
     if (!bForcingDrumBeat && bIsChaseSignal && p != DRUMBEAT)
