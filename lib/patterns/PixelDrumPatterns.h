@@ -435,7 +435,7 @@ public:
 
     setCurrentPiezoThreshold(getCurrentThresholdFromPiezo());
 
-    uint16_t potValue = constrain(map(int(analogRead(myDrumComponent.potentiometerPinNumber)), 0, 1023, int(myDrumComponent.minimumRequiredPiezoThreshold), 85), 0, 85);
+    uint16_t potValue = constrain(map(int(analogRead(myDrumComponent.potentiometerPinNumber)), 0, 1023, int(myDrumComponent.minimumRequiredPiezoThreshold), 125), 0, 125);
 
     if (myDrumComponent.currentPiezoThreshold > potValue)
     {

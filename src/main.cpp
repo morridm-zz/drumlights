@@ -25,7 +25,8 @@ static const struct DrumComponent SNARE = {0, 50, 7, 0, LED_STRIP_PIN_NUMBER, PI
 static const struct DrumComponent HI_TOM = {1, 50, 7, 0, LED_STRIP_PIN_NUMBER, PIEZO_ANALOG_INPUT_PIN, PIEZO_DIGITAL_INPUT_PIN, POTENTIOMETER_PIN, PUSH_BUTTON_PIN, NEO_GRB + NEO_KHZ800};
 static const struct DrumComponent MIDDLE_TOM = {2, 65, 7, 0, LED_STRIP_PIN_NUMBER, PIEZO_ANALOG_INPUT_PIN, PIEZO_DIGITAL_INPUT_PIN, POTENTIOMETER_PIN, PUSH_BUTTON_PIN, NEO_GRB + NEO_KHZ800};
 static const struct DrumComponent FLOOR_TOM = {3, 81, 7, 0, LED_STRIP_PIN_NUMBER, PIEZO_ANALOG_INPUT_PIN, PIEZO_DIGITAL_INPUT_PIN, POTENTIOMETER_PIN, PUSH_BUTTON_PIN, NEO_GRB + NEO_KHZ800};
-static const struct DrumComponent KICK = {4, 85, 7, 0, LED_STRIP_PIN_NUMBER, PIEZO_ANALOG_INPUT_PIN, PIEZO_DIGITAL_INPUT_PIN, POTENTIOMETER_PIN, PUSH_BUTTON_PIN, NEO_GRB + NEO_KHZ800};
+
+static const struct DrumComponent KICK = {4, 106, 8, 0, LED_STRIP_PIN_NUMBER, PIEZO_ANALOG_INPUT_PIN, PIEZO_DIGITAL_INPUT_PIN, POTENTIOMETER_PIN, PUSH_BUTTON_PIN, NEO_GRB + NEO_KHZ800};
 
 static const struct DrumComponent THIS_DRUM_COMPONENT = KICK;
 
@@ -37,7 +38,7 @@ DrumPatterns strip(THIS_DRUM_COMPONENT, &animationComplete);
 void animationComplete()
 {
 
-    uint8_t red = random(0, 255);
+    uint8_t red = random(0, 255); 
     uint8_t green = random(0, 255);
     uint8_t blue = random(0, 255);
 
