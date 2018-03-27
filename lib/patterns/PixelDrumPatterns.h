@@ -12,7 +12,7 @@ public:
   // Member Variables:
   ANIMATION previousPattern;
   ANIMATION ActivePattern; // which pattern is running
-  direction Direction;   // direction to run the pattern
+  direction Direction;     // direction to run the pattern
 
   boolean bIsChaseSignal = true;
   boolean bForcingDrumBeat = false;
@@ -101,6 +101,37 @@ public:
         DrumBeatUpdate();
         break;
       }
+    }
+  }
+
+  void adjustBrightness()
+  {
+
+    static uint8_t brightness = getBrightness();
+    static uint32_t c = Color(0, 0, 255);
+
+    for (uint16_t i = 0; i < numPixels(); i++)
+    {
+      setPixelColor(i, c);
+    }
+
+    show();
+
+    uint8_t potBrightness = (uint8_t)constrain(map(int(analogRead(myDrumComponent.potentiometerPinNumber)), 0, 1023, 255, 4), 0, 255);
+
+    if (brightness != potBrightness)
+    {
+      setBrightness(potBrightness);
+      brightness = potBrightness;
+
+      show();
+
+      for (uint16_t i = 0; i < numPixels(); i++)
+      {
+        setPixelColor(i, c);
+      }
+
+      show();
     }
   }
 

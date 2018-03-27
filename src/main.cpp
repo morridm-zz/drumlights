@@ -15,6 +15,8 @@
 #include <Arduino.h>
 #include <PixelDrumPatterns.h> //See https://github.com/morridm/drumlights/blob/master/lib/patterns/PixelDrumPatterns.h
 
+#include <Button.h> //https://github.com/JChristensen/Button
+
 static const int LED_STRIP_PIN_NUMBER = 4;     // The digital pin # for the neopixel output
 static const int PIEZO_ANALOG_INPUT_PIN = 0;   // The analog alias pin # to the piezo input on PIEZO_DIGITAL_INPUT_PIN
 static const int PIEZO_DIGITAL_INPUT_PIN = 14; // The digital pin # for the piezo input
@@ -30,6 +32,26 @@ static const struct DrumComponent KICK = {4, 106, 8, 0, LED_STRIP_PIN_NUMBER, PI
 
 static const struct DrumComponent THIS_DRUM_COMPONENT = SNARE;
 
+boolean PULLUP = true; //To keep things simple, we use the Arduino's internal pullup resistor.
+boolean INVERT = true;
+static const int DEBOUNCE_MS = 20;   //A debounce time of 20 milliseconds usually works well for tactile button switches.
+static const int REPEAT_FIRST = 500; //ms required before repeating on long press
+static const int REPEAT_INCR = 100;  //repeat interval for long press
+static const int MIN_COUNT = 0;
+static const int MAX_COUNT = 59;
+Button btnUP(PUSH_BUTTON_PIN, PULLUP, INVERT, DEBOUNCE_MS);
+enum
+{
+    WAIT,
+    PRESSED,
+    HELD,
+    RELEASED
+};                                //The possible states for the state machine
+uint8_t STATE;                    //The current state machine state
+int count;                        //The number that is adjusted
+int lastCount = -1;               //Previous value of count (initialized to ensure it's different when the sketch starts)
+unsigned long rpt = REPEAT_FIRST; //A variable time that is used to drive the repeats for long presses
+
 void animationComplete();
 
 DrumPatterns strip(THIS_DRUM_COMPONENT, &animationComplete);
@@ -38,7 +60,7 @@ DrumPatterns strip(THIS_DRUM_COMPONENT, &animationComplete);
 void animationComplete()
 {
 
-    uint8_t red = random(0, 255); 
+    uint8_t red = random(0, 255);
     uint8_t green = random(0, 255);
     uint8_t blue = random(0, 255);
 
@@ -120,11 +142,17 @@ void setup()
 
 void loop()
 {
-    strip.Update();
+
+    static boolean brightnessWasAdjusted = false;
+
+    if (!brightnessWasAdjusted)
+    {
+        strip.Update();
+    }
 
     ANIMATION currentPattern = strip.ActivePattern;
 
-    if (wasButtonPressed())
+    if (STATE == RELEASED && !brightnessWasAdjusted)
     {
         strip.Interval = 0;
 
@@ -164,6 +192,42 @@ void loop()
             strip.colorWipeAnimation(strip.Color(0, 30, 0), 10); //show green color wipe to indicate it is ready to go
             break;
         }
+    }
+
+    btnUP.read();
+
+    switch (STATE)
+    {
+
+    case WAIT: //wait for a button event
+        if (btnUP.wasPressed())
+        {
+            STATE = PRESSED;
+        }
+        else if (btnUP.wasReleased())
+        {
+            STATE = RELEASED;
+            rpt = REPEAT_FIRST;
+        }
+        else if (btnUP.pressedFor(rpt))
+        {                       //check for long press
+            rpt += REPEAT_INCR; //increment the long press interval
+            STATE = HELD;
+        }
+        break;
+    case HELD:
+        strip.adjustBrightness();
+        brightnessWasAdjusted = true;
+        rpt += REPEAT_INCR; //increment the long press interval
+        STATE = WAIT;
+        break;
+    case RELEASED:
+        STATE = WAIT;
+        brightnessWasAdjusted = false;
+        break;
+    case PRESSED:
+        STATE = WAIT;
+        break;
     }
 
     strip.showStrip();
