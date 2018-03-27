@@ -29,6 +29,14 @@ static const int POTENTIOMETER_PIN = A1;
 
 static const int PUSH_BUTTON_PIN = 12;
 
+static const int REPEAT_FIRST = 500;
+
+static const int REPEAT_INCR = 100;
+
+unsigned long rpt = REPEAT_FIRST;
+
+Button btnUP(PUSH_BUTTON_PIN, true, true, 20);
+
 static const struct DrumComponent SNARE = {0,
                                            65,
                                            7,
@@ -86,14 +94,6 @@ static const struct DrumComponent KICK = {4,
 
 static const struct DrumComponent THIS_DRUM_COMPONENT = SNARE;
 
-static const int REPEAT_FIRST = 500;
-
-static const int REPEAT_INCR = 100;
-
-unsigned long rpt = REPEAT_FIRST;
-
-Button btnUP(PUSH_BUTTON_PIN, true, true, 20);
-
 void animationComplete();
 
 DrumPatterns strip(THIS_DRUM_COMPONENT, &animationComplete);
@@ -124,7 +124,7 @@ void animationComplete() {
   }
 }
 
-void checkPattern(uint8_t currentButtonState) {
+ANIMATION setStripPattern(uint8_t currentButtonState) {
 
   ANIMATION currentPattern = strip.ActivePattern;
 
@@ -169,6 +169,8 @@ void checkPattern(uint8_t currentButtonState) {
       break;
     }
   }
+
+  return currentPattern;
 }
 
 void setup() {
@@ -191,11 +193,11 @@ void setup() {
 
 void loop() {
 
-  static boolean brightnessWasAdjusted = false;
+  static boolean brightnessIsBeingAdjusted = false;
   static uint8_t BUTTON_STATE = WAIT;
 
-  if (!brightnessWasAdjusted) {
-    checkPattern(BUTTON_STATE);
+  if (!brightnessIsBeingAdjusted) {
+    setStripPattern(BUTTON_STATE);
   }
 
   btnUP.read();
@@ -223,7 +225,7 @@ void loop() {
   case HELD:
 
     strip.adjustBrightness();
-    brightnessWasAdjusted = true;
+    brightnessIsBeingAdjusted = true;
     rpt += REPEAT_INCR;
     BUTTON_STATE = WAIT;
     break;
@@ -231,7 +233,7 @@ void loop() {
   case RELEASED:
 
     BUTTON_STATE = WAIT;
-    brightnessWasAdjusted = false;
+    brightnessIsBeingAdjusted = false;
     break;
 
   case PRESSED:
