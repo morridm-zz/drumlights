@@ -126,51 +126,45 @@ void animationComplete() {
 
 ANIMATION setStripPattern(uint8_t currentButtonState) {
 
-  ANIMATION currentPattern = strip.ActivePattern;
-
   strip.Update();
 
   if (currentButtonState == RELEASED) {
+
+    uint32_t wipeColor = strip.Color(0, 0, 0);
+
     strip.Interval = 0;
 
-    switch (currentPattern) {
+    switch (strip.ActivePattern) {
     case DRUMBEAT:
       strip.ActivePattern = RAINBOW_CYCLE;
       strip.TotalSteps = 255;
-      currentPattern = strip.ActivePattern;
-      strip.clearStrip();
-      strip.colorWipeAnimation(strip.Color(0, 0, 255), 10);
+      wipeColor = strip.Color(0, 0, 255);
       break;
     case RAINBOW_CYCLE:
       strip.ActivePattern = SCANNER;
-      currentPattern = strip.ActivePattern;
-      strip.clearStrip();
-      strip.colorWipeAnimation(strip.Color(255, 0, 0), 10);
+      wipeColor = strip.Color(255, 0, 0);
       break;
     case SCANNER:
       strip.ActivePattern = COLOR_WIPE;
-      currentPattern = strip.ActivePattern;
-      strip.clearStrip();
-      strip.colorWipeAnimation(strip.Color(255, 75, 0), 10);
+      wipeColor = strip.Color(255, 75, 0);
       break;
     case COLOR_WIPE:
       strip.ActivePattern = DRUMBEAT;
       strip.TotalSteps = 255;
-      currentPattern = strip.ActivePattern;
-      strip.clearStrip();
-      strip.colorWipeAnimation(strip.Color(0, 30, 0), 10);
+      wipeColor = strip.Color(0, 30, 0);
       break;
     default:
       strip.ActivePattern = DRUMBEAT;
       strip.TotalSteps = 255;
-      currentPattern = strip.ActivePattern;
-      strip.clearStrip();
-      strip.colorWipeAnimation(strip.Color(0, 30, 0), 10);
+      wipeColor = strip.Color(0, 30, 0);
       break;
     }
+
+    strip.clearStrip();
+    strip.colorWipeAnimation(wipeColor, 10);
   }
 
-  return currentPattern;
+  return strip.ActivePattern;
 }
 
 void setup() {
