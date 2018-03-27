@@ -124,6 +124,12 @@ void animationComplete() {
   }
 }
 
+void runModeIndicator(uint32_t c, int wait = 10) {
+  strip.clearStrip();
+  strip.colorWipeAnimation(c, wait);
+  strip.clearStrip();
+}
+
 ANIMATION setStripPattern(uint8_t currentButtonState) {
 
   strip.Update();
@@ -159,9 +165,7 @@ ANIMATION setStripPattern(uint8_t currentButtonState) {
     }
 
     strip.Interval = 0;
-    strip.clearStrip();
-    strip.colorWipeAnimation(wipeColor, 10);
-    strip.clearStrip();
+    runModeIndicator(wipeColor);
     strip.Update();
   }
 
@@ -181,9 +185,7 @@ void setup() {
   pinMode(PIEZO_DIGITAL_INPUT_PIN, INPUT);
   pinMode(PUSH_BUTTON_PIN, INPUT_PULLUP);
 
-  strip.clearStrip();
-  strip.colorWipeAnimation(strip.Color(0, 30, 0), 10);
-  strip.clearStrip();
+  runModeIndicator(strip.Color(0, 30, 0));
 }
 
 void loop() {
