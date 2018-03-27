@@ -132,8 +132,6 @@ ANIMATION setStripPattern(uint8_t currentButtonState) {
 
     uint32_t wipeColor = strip.Color(0, 0, 0);
 
-    strip.Interval = 0;
-
     switch (strip.ActivePattern) {
     case DRUMBEAT:
       strip.ActivePattern = RAINBOW_CYCLE;
@@ -160,8 +158,11 @@ ANIMATION setStripPattern(uint8_t currentButtonState) {
       break;
     }
 
+    strip.Interval = 0;
     strip.clearStrip();
     strip.colorWipeAnimation(wipeColor, 10);
+    strip.clearStrip();
+    strip.Update();
   }
 
   return strip.ActivePattern;
