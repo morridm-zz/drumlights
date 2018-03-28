@@ -108,7 +108,7 @@ public:
   {
 
     static uint8_t brightness = getBrightness();
-    static uint32_t c = Color(0, 0, 255);
+    uint32_t c = Color(255, 255, 255);
 
     for (uint16_t i = 0; i < numPixels(); i++)
     {
